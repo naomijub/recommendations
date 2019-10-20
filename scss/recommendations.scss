@@ -94,3 +94,54 @@
 .bestprice-price {
   font-size: 14px;
 }
+
+.flight-top {
+  margin-top: 1rem;
+}
+
+.flight-container{
+  display: flex;
+  width: 100%;
+  height: 90px;
+  border: 0.1rem solid rgb(177, 176, 176);
+}
+
+.flight-info{
+  display: flex;
+  text-align: center;
+  padding: 0 10rem;
+  vertical-align: middle;
+}
+
+.arrow {
+  font-size: 23px;
+  font-weight: bold;
+  color: red;
+}
+
+.flight-info-time {
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(112, 111, 111);
+}
+
+.flight-info-code {
+  font-size: 25px;
+  color: gray;
+}
+
+.flight-duration {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-size: 16px;
+}
+
+.flight-price {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 25px;
+  font-weight: bold;
+  color: #5c5c5c;
+  border-left: 1px solid gray;
+  float: left;
+}
