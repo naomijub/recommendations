@@ -14,6 +14,9 @@ path = "src/main.rs"
 stdweb = "0.4"
 yew = "*"
 failure = "*"
+serde = "*"
+serde_derive = "*"
+serde_json = "*"
 
 [lib]
 name = "recommendations_paso2"

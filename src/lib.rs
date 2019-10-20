@@ -1,13 +1,16 @@
 #![recursion_limit="256"]
 extern crate yew;
 extern crate stdweb;
+extern crate serde;
+extern crate serde_json;
+#[macro_use] extern crate serde_derive;
 
 use yew::prelude::*;
 use yew::services::{
     ConsoleService,
     fetch::{FetchService, FetchTask, Request, Response},
 };
-use yew::events::IKeyboardEvent;
+// use yew::events::IKeyboardEvent;
 use yew::format::{Text, Nothing};
 
 pub struct Model {
@@ -20,7 +23,7 @@ pub struct Model {
   edit_value: String,
   value: String,
   ft: Option<FetchTask>,
-  payload: Option<String>,
+  payload: Option<BestPrices>,
 }
 
 #[derive(Debug)]
@@ -60,21 +63,23 @@ impl Component for Model {
   fn update(&mut self, msg: Self::Message) -> ShouldRender {
     use Msg::*;
     match msg {
-        Msg::Update(val) => {
+        Update(val) => {
             self.edit_value = val;
         }
-        Msg::Submit => {
+        Submit => {
             self.value = self.edit_value.clone();
             self.fetch_data();
         }
-        Msg::FetchReady(response) => {
+        FetchReady(response) => {
             self.fetching = false;
-            self.payload = response.map(|data| data).ok();
+            self.payload = Some(
+              serde_json::from_str(&response.map(|data| data).unwrap()).unwrap()
+            );
         }
-        Msg::Ignore => {
+        Ignore => {
             return false;
         }
-        Msg::Nope => {}
+        Nope => {}
       }
       true
     }
@@ -93,8 +98,8 @@ impl Renderable<Model> for Model {
         html! {
           <div class="lafran">
             <div class="header",>{"Lafran"}</div>
+            { self.view_data() }
             <section class="container">
-                { self.view_data() }
             </section>
             <footer class="container" >
               <div class="flight-disclaimer">
@@ -114,8 +119,9 @@ impl Renderable<Model> for Model {
 impl Model {
     fn view_data(&self) -> Html<Model> {
         if let Some(value) = &self.payload {
+            let mut mut_value =  value.clone();
             html! {
-                { value }
+                { view_itinerary(mut_value.itinerary) }
             }
         } else {
             html! {
@@ -153,6 +159,63 @@ impl Model {
     }
 }
 
+fn view_itinerary(itinerary: Itinerary) -> Html<Model> {
+  html!{
+    <div class="itinerary">
+      <div class="route"> {itinerary.clone()} </div>
+      <div class="date"> {itinerary.date} </div>
+    </div>
+  }
+}
+
+#[allow(non_snake_case)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct BestPrices {
+  pub itinerary: Itinerary,
+  pub bestPrices: Vec<BestPrice>,
+}
+
+#[allow(non_snake_case)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Itinerary {
+  pub date: String,
+  pub originDestinations: Vec<OriginDestination>
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct OriginDestination {
+  pub duration: i32,
+  pub departure: Target,
+  pub arrival: Target,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Target {
+  pub airport: String,
+  pub city: String,
+  pub country: String,
+  pub timestamp: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct BestPrice {
+  pub date: String,
+  pub available: bool,
+  pub price: Price,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Price {
+  pub amount: f32,
+  pub currency: String
+}
+
+impl std::fmt::Display for Itinerary {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} a {}", self.originDestinations.first().unwrap().departure.city,
+          self.originDestinations.last().unwrap().arrival.city)
+    }
+}
 
 // <input
 //     type="text",
@@ -164,3 +227,4 @@ impl Model {
 //         if e.key() == "Enter" { Msg::Submit } else { Msg::Nope }
 //     },
 // />
+
