@@ -121,7 +121,10 @@ impl Model {
         if let Some(value) = &self.payload {
             let mut mut_value =  value.clone();
             html! {
+              <div>
                 { view_itinerary(mut_value.itinerary) }
+                { view_bestprices(mut_value.bestPrices) }
+              </div>
             }
         } else {
             html! {
@@ -164,6 +167,26 @@ fn view_itinerary(itinerary: Itinerary) -> Html<Model> {
     <div class="itinerary">
       <div class="route"> {itinerary.clone()} </div>
       <div class="date"> {itinerary.date} </div>
+    </div>
+  }
+}
+
+fn view_bestprices(best_prices: Vec<BestPrice>) -> Html<Model> {
+  html!{
+    <div class="container">
+      <div class="bestprice-title"> { "Escolha seu voo" } </div>
+      <div class="bestprices"> {
+        best_prices.into_iter().map(|best|
+          html!{
+            <div class="bestprice-container">
+              <div class="bestprice-date"> {best.date} </div>
+              <div class="bestprice-price">
+                {best.price} 
+              </div>
+            </div>
+          }
+        ).collect::<Html<Model>>()
+      } </div>
     </div>
   }
 }
@@ -214,6 +237,12 @@ impl std::fmt::Display for Itinerary {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} a {}", self.originDestinations.first().unwrap().departure.city,
           self.originDestinations.last().unwrap().arrival.city)
+    }
+}
+
+impl std::fmt::Display for Price {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} {}", self.currency, self.amount)
     }
 }
 

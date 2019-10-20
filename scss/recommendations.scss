@@ -1,12 +1,12 @@
 .header {
   font-family: sans-serif;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: left;
   color: white;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   padding-left: 20rem;
-  background-color: mediumblue;
+  background-color: #1b0088;
   border-bottom: 0.5rem solid red;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .itinerary {
-  background-color: blue;
+  background-color: rgb(15, 15, 241);
   font-family: sans-serif;
   text-align: left;
   color: white;
@@ -60,4 +60,37 @@
 .date {
   margin-top: 0.3rem;
   font-size: 1.5rem;
+}
+
+.bestprices {
+  border-bottom: 0.1rem solid gray;
+  border-left: 0.05rem solid rgb(163, 162, 162);
+  border-right: 0.05rem solid rgb(163, 162, 162);
+  display: flex;
+}
+
+.bestprice-title {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  margin-top: 0.8rem;
+  color: #1b0088;
+}
+
+.bestprice-container {
+  width: 14.25%;
+  padding: 14px 0 10px;
+  color: #5c5c5c; 
+  text-align: center;
+  border-top: 0.01rem solid rgb(184, 183, 183);
+  border-left: 0.01rem solid rgb(163, 162, 162);
+  border-right: 0.01rem solid rgb(163, 162, 162);
+}
+
+.bestprice-date {
+  font-size: 16px;
+}
+
+.bestprice-price {
+  font-size: 14px;
 }
