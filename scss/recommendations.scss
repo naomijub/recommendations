@@ -109,36 +109,38 @@
 .flight-info{
   display: flex;
   text-align: center;
-  padding: 0 10rem;
-  vertical-align: middle;
+  padding: 2rem 16rem;
+  letter-spacing: 2px;
 }
 
 .arrow {
-  font-size: 23px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 200%;
   color: red;
+  padding: 0 2px;
 }
 
 .flight-info-time {
   font-size: 25px;
   font-weight: bold;
   color: rgb(112, 111, 111);
+  padding: 0 3px;
 }
 
 .flight-info-code {
   font-size: 25px;
   color: gray;
+  padding: 0 3px;
 }
 
 .flight-duration {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 2rem 3rem;
   font-size: 16px;
+
 }
 
 .flight-price {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 2rem 2rem;
   font-size: 25px;
   font-weight: bold;
   color: #5c5c5c;

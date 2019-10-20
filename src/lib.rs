@@ -223,11 +223,11 @@ pub fn view_flight(flight: Flight) -> Html<Model> {
   html!{
     <div class="flight-container">
       <div class="flight-info">
-        <div class="flight-info-time"> { format!("{} ",flight.departure.time.stamp) } </div>
-        <div class="flight-info-code"> { format!("{} ",flight.departure.airportCode) } </div>
+        <div class="flight-info-time"> { flight.departure.time.stamp } </div>
+        <div class="flight-info-code"> { flight.departure.airportCode } </div>
         <div class="arrow">{ " > " }</div>
-        <div class="flight-info-time"> { format!(" {}",flight.arrival.time.stamp) } </div>
-        <div class="flight-info-code"> { format!(" {}",flight.arrival.airportCode) } </div>
+        <div class="flight-info-time"> { flight.arrival.time.stamp } </div>
+        <div class="flight-info-code"> { flight.arrival.airportCode } </div>
       </div>
       <div class="flight-duration">{flight.flightDuration}</div>
       <div class="flight-price">{flight.cabins[0].displayPrice}</div>
